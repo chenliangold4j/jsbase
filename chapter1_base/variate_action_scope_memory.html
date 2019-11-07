@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //基本类型和引用类型。
+
+    var person = new Object();
+    person.name = "test";
+    console.log("name;" + person.name);
+    //基本类型不是对象，无法添加属性
+    var name = "dada";
+    name.age = 27;
+    // console(name.age);//error
+    //函数参数和java类似，不做说明。
+
+
+    //类型检测除了typeof  还有instanceof
+    console.log(person instanceof Object);
+    console.log(person instanceof Array);
+
+    //js有执行环境。全局执行环境，在web中，全局执行环境是windows对象。
+    // 每个函数都有自己的执行环境。
+
+    //js没有块级作用域。
+    if(true){
+        var color = "blue";
+    }
+    console.log(color);
+    for(var i=0;i<10;i++){
+        //dosomething
+    }
+    console.log(i);
+
+    //垃圾收集 标记清除算法。进入环境标记，退出环境清除。
+
+    // 管理内存：将对象主动赋值为null，主要让其脱离执行环境，等下垃圾回收来回收。
+
+</script>
+
+</html>

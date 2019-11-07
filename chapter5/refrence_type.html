@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 1.对象
+    //创建对象的方式有两种
+    var person1 = new Object();
+    person1.name = "tom";
+
+    var person2 = {
+        name:"jack",
+        age:17
+    };
+
+// 与new Objectx相当
+    var person3 = {};
+
+    // 数组：Array  创建的时候可以省略new
+    var color1 = new Array();
+    var color2 = new Array(20);
+    var color3 = new Array("red","blue");
+    var color4 = [];
+    var color5 = ["red","blue"];
+    // 数组长度不是只读的
+    color5.length = 6;
+    console.log(color5[5]);
+
+    if(color1 instanceof Array){
+
+    }
+    if(Array.isArray(color1)){
+        // 更好一些
+    }
+
+    console.log(color3.toString());
+    console.log(color3.valueOf());
+    console.log(color3);
+
+    //数组的栈方法： LIFO
+    var count = color3.push("black");
+    console.log(count);
+    console.log(color3.toString());
+    color3.pop();
+    console.log(color3.toString());
+    color3.pop();
+    console.log(color3.toString());
+
+    //数组的队列方法：FIFO
+    color3.push("black","blue");
+    console.log( color3.shift());
+    console.log(color3.toString());
+    color3.unshift("green");
+    console.log(color3.toString());
+
+    //数组的重排序；
+    var valuse = [1,2,3,4,5];
+    valuse.reverse();
+    valuse=[0,1,5,10,16];
+    valuse.sort();
+    console.log(valuse);
+    function compare(value1,value2){
+        if(value1 > value2)return 1;
+        else if(value1 < value2) return -1;
+        else return 0;
+    }
+    valuse.sort(compare);
+    console.log(valuse);
+
+    //数组的。操作方法
+    var testcolor = color3.concat("yellow",["brown","pink"]);
+    console.log(testcolor);
+    console.log(testcolor.slice(1,3));
+
+    var removed = testcolor.splice(0,1); //删除第一项
+    console.log(testcolor);
+    console.log(removed);
+    var removed = testcolor.splice(1,0,"orange","purple");//从位置一插入两项
+    console.log(testcolor);
+    console.log(removed);
+    var removed = testcolor.splice(1,1,"red","white");//插入两项，删除一项。
+    console.log(testcolor);
+    console.log(removed);
+
+</script>
+</html>

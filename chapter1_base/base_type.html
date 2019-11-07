@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    console.log("test");
+
+    var message = 'some string';
+    console.log(typeof message);
+    console.log(typeof (message));
+    console.log(typeof 95);
+
+
+    var message2;
+    console.log(message2);//undefined
+   // console.log(message3);//error
+
+    console.log(typeof message2);
+    console.log(typeof age);
+
+
+    var car = null;
+    console.log(car);
+    console.log(car == undefined);
+
+    var found =true;
+    var lost = false;
+    var messageAsBoolean = Boolean(message);
+    console.log(messageAsBoolean);
+
+    //计算出的超出js范围的值为：infinity 无法进入接下来的计算
+
+    var result = Number.MAX_VALUE+Number.MAX_VALUE;
+    console.log(isFinite(result));//是不是可计算的
+    console.log(isFinite(123));
+
+    //NaN not a number ,是个特殊值，本来要返回数值但是没有的地方，比如除0
+    console.log(1/0);
+    console.log(NaN == NaN);
+
+    //Number函数
+    console.log(Number("hello"));
+    console.log(Number(""));
+    console.log(Number("00011"));
+    console.log(Number(true));   
+    //其他string obj 具体看书。
+
+    //js == != 先会做强制转换之后再对比。 === !==意思是不做转换对比。
+    
+    function test(val1,val2){
+        console.log(val1 + ":"+val2);
+    }
+    test("1","2");
+    
+    /*
+        ECMAScript不介意传进的参数个数与类型。
+        函数没有重载。
+    */
+
+    function howMangArgs(){
+        console.log("args number is :"+arguments.length);
+    }
+
+    howMangArgs("1","2");
+    howMangArgs();
+    howMangArgs(12,"45",11)
+
+
+
+</script>
+</html>
