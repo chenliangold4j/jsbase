@@ -96,7 +96,30 @@
     console.log(numbers.indexOf(4));
     console.log(numbers.lastIndexOf(4,4));
 
-    //迭代方法
+    //迭代方法  ECMAscript5 5个迭代方法。每个方法都接收两个参数。
+    // 要在每一项上运行的函数，和该函数的作用域对象（可选）。
+    // 传入方法的函数会接受三个参数。
+    var everyResult = numbers.every(function(item,index,array){
+        return item>2;
+    });
+    console.log(everyResult);
+    var someResult = numbers.some(function(item,index,array){
+        return item>2;
+    });
+    console.log(someResult);
+    var filterResult = numbers.filter(function(item,index,array){
+        return item>2;
+    });
+    console.log(filterResult);
+    var mapResult = numbers.map(function(item,index,array){
+        return item << 1;
+    });
+    console.log(mapResult);
+    numbers.forEach(function(item,index,array){
+        console.log(item+1);
+    });
+
+    //数组缩小：reduce and  reduceRight;
     
 
 </script>
