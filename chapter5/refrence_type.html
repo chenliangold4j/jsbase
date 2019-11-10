@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-    
+
 </body>
 <script>
     // 1.对象
@@ -16,27 +18,27 @@
     person1.name = "tom";
 
     var person2 = {
-        name:"jack",
-        age:17
+        name: "jack",
+        age: 17
     };
 
-// 与new Objectx相当
+    // 与new Objectx相当
     var person3 = {};
 
-    // 数组：Array  创建的时候可以省略new
+    // 2.数组：Array  创建的时候可以省略new
     var color1 = new Array();
     var color2 = new Array(20);
-    var color3 = new Array("red","blue");
+    var color3 = new Array("red", "blue");
     var color4 = [];
-    var color5 = ["red","blue"];
+    var color5 = ["red", "blue"];
     // 数组长度不是只读的
     color5.length = 6;
     console.log(color5[5]);
 
-    if(color1 instanceof Array){
+    if (color1 instanceof Array) {
 
     }
-    if(Array.isArray(color1)){
+    if (Array.isArray(color1)) {
         // 更好一些
     }
 
@@ -54,73 +56,233 @@
     console.log(color3.toString());
 
     //数组的队列方法：FIFO
-    color3.push("black","blue");
-    console.log( color3.shift());
+    color3.push("black", "blue");
+    console.log(color3.shift());
     console.log(color3.toString());
     color3.unshift("green");
     console.log(color3.toString());
 
     //数组的重排序；
-    var valuse = [1,2,3,4,5];
+    var valuse = [1, 2, 3, 4, 5];
     valuse.reverse();
-    valuse=[0,1,5,10,16];
+    valuse = [0, 1, 5, 10, 16];
     valuse.sort();
     console.log(valuse);
-    function compare(value1,value2){
-        if(value1 > value2)return 1;
-        else if(value1 < value2) return -1;
+    function compare(value1, value2) {
+        if (value1 > value2) return 1;
+        else if (value1 < value2) return -1;
         else return 0;
     }
     valuse.sort(compare);
     console.log(valuse);
 
     //数组的。操作方法
-    var testcolor = color3.concat("yellow",["brown","pink"]);
+    var testcolor = color3.concat("yellow", ["brown", "pink"]);
     console.log(testcolor);
-    console.log(testcolor.slice(1,3));
+    console.log(testcolor.slice(1, 3));
 
-    var removed = testcolor.splice(0,1); //删除第一项
+    var removed = testcolor.splice(0, 1); //删除第一项
     console.log(testcolor);
     console.log(removed);
-    var removed = testcolor.splice(1,0,"orange","purple");//从位置一插入两项
+    var removed = testcolor.splice(1, 0, "orange", "purple");//从位置一插入两项
     console.log(testcolor);
     console.log(removed);
-    var removed = testcolor.splice(1,1,"red","white");//插入两项，删除一项。
+    var removed = testcolor.splice(1, 1, "red", "white");//插入两项，删除一项。
     console.log(testcolor);
     console.log(removed);
 
     //位置方法
-    var numbers = [1,2,3,4,5,4,3,2,1];
+    var numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];
     console.log(numbers.lastIndexOf(4));
-    console.log(numbers.indexOf(4,4));
+    console.log(numbers.indexOf(4, 4));
     console.log(numbers.indexOf(4));
-    console.log(numbers.lastIndexOf(4,4));
+    console.log(numbers.lastIndexOf(4, 4));
 
     //迭代方法  ECMAscript5 5个迭代方法。每个方法都接收两个参数。
     // 要在每一项上运行的函数，和该函数的作用域对象（可选）。
     // 传入方法的函数会接受三个参数。
-    var everyResult = numbers.every(function(item,index,array){
-        return item>2;
+    var everyResult = numbers.every(function (item, index, array) {
+        return item > 2;
     });
     console.log(everyResult);
-    var someResult = numbers.some(function(item,index,array){
-        return item>2;
+    var someResult = numbers.some(function (item, index, array) {
+        return item > 2;
     });
     console.log(someResult);
-    var filterResult = numbers.filter(function(item,index,array){
-        return item>2;
+    var filterResult = numbers.filter(function (item, index, array) {
+        return item > 2;
     });
     console.log(filterResult);
-    var mapResult = numbers.map(function(item,index,array){
+    var mapResult = numbers.map(function (item, index, array) {
         return item << 1;
     });
     console.log(mapResult);
-    numbers.forEach(function(item,index,array){
-        console.log(item+1);
+    numbers.forEach(function (item, index, array) {
+        console.log(item + 1);
     });
 
-    //数组缩小：reduce and  reduceRight;
-    
+    //归并方法：reduce and  reduceRight; reduce从第一项开始向后，reduceRight 从后向前
+    var values = [1, 2, 3, 4, 5];
+    var sum = values.reduce(function (prev, cur, index, array) {
+        return prev + cur;
+    });
+    console.log("reduce:" + sum)
+
+    //---------------- array 结束-------------------------------
+
+    //3.日期类型
+    var now = new Date();
+    console.log(now);
+    now = new Date(Date.parse("May 25,2004")); //or  now = new Date("May 25,2004")
+    console.log(now);
+    now = new Date(Date.UTC(2005, 4, 5, 17, 55, 55));
+    console.log(now);
+    now = new Date(2005, 4, 5, 17, 55, 55);
+    console.log(now);
+    console.log(now.valueOf());//返回毫秒数
+
+    //4.RegExp类型
+    // var expression = /pattern/flags;
+    // flags: g 全局  i 不区分大小写   m 多行模式
+    var re = null, i;
+    for (i = 0; i < 5; i++) {
+        re = /cat/g;
+        console.log(re.test("catastrophe"));
+    }
+
+    for (i = 0; i < 5; i++) {
+        re = new RegExp("cat", "g");
+        console.log(re.test("catastrophe"));
+    }
+    //主要方法exec（）  用到再详细查吧。
+    var text = "mom and dad and baby";
+    var pattern = /mom( and dad( and baby)?)?>/gi;
+    var matches = pattern.exec(text);
+    console.log(matches);
+
+    //5. Function类型   每个函数都是Function类型的实例，也由属性和方法。
+    function sum(num1, num2) {
+        return num1 + num2;
+    }//与下一致
+    var sum = function (num1, num2) {
+        return num1 + num2;
+    }
+    console.log(sum(10, 20));
+    var anotherSum = sum;
+    console.log(anotherSum(10, 20));
+    //js没有重载   函数可以作为值来传递。
+    function callFun(somFun, somArg) {
+        return somFun(somArg);
+    }
+    //函数内部有两个特殊对象：arguments和this    js的this 指向当前函数执行的环境对象。
+    //每个函数都包含两个属性：length和prototype  length是函数希望接受的命名参数个数，
+
+    console.log(sum.length);
+    //prototype 是保存他们所有实例方法的真正所在。换句话说：诸如：toStirng（）和valueOf（）等方法保存在此属性下。
+    //只不过是通过各自对象的实例访问罢了。
+    //每个函数都包含两个非继承的方法 apply()和call();
+    //apply 接受两个参数：作用域和参数数组。  call和apply类似，但是传参不用数组。
+    function callSume1(num1, num2) {
+        return sum.apply(this, arguments);
+    }
+    console.log(callSume1(10, 20));
+    function callSume2(num1, num2) {
+        return sum.call(this, num1, num2);
+    }
+    console.log(callSume2(10, 20));
+    //apply和call的作用在于扩充函数的作用域
+    window.color = "red";
+    var o = { color: "blue" };
+    function sayColor() {
+        console.log(this.color);
+    }
+    sayColor.call(this);
+    sayColor.call(o);
+    // ECMscript5 还定义了一个bing（） 这个方法创建一个函数的实例，其this值会被绑定到传给bind（）函数的值
+    var objectSayHello = sayColor.bind(o);
+    objectSayHello();
+
+    //6.基本包装类  Boolean Number String
+    var s1 = "somte txt";
+    var s2 = s1.substring(2);
+    s2.color = "red";
+    console.log(s2.color);//undefined 此时过度对象被回收。
+    // 基本类型没有方法，能掉的原因是自动包装了。会有一个过度用的包装类的对象，用过之后就舍弃   
+    var sobj = new Object("some text");//包装类
+    console.log(sobj instanceof String);
+    console.log(typeof sobj);
+    console.log(typeof s1);
+
+    var value = "25";
+    var number = Number(value); //转型函数
+    console.log(typeof number); //"number"
+    var obj = new Number(value); //构造函数
+    console.log(typeof obj); //"object"
+    //对于Boolean   永远不要使用。
+    var num = 10.005;
+    console.log(num.toFixed(2));
+
+    //String 的方法
+    var stringValue = "hello world";
+    console.log(stringValue.charAt(1)); //"e"
+    console.log(stringValue.charCodeAt(1));//字符编码.
+
+    var stringValue = "hello world";
+    console.log(stringValue.slice(3)); //"lo world"
+    console.log(stringValue.substring(3)); //"lo world"
+    console.log(stringValue.substr(3)); //"lo world"
+    console.log(stringValue.slice(3, 7)); //"lo w"
+    console.log(stringValue.substring(3, 7)); //"lo w" 
+    console.log(stringValue.substr(3, 7)); //"lo worl"   //从3开始  返回7个字符
+    console.log(stringValue.slice(-3)); //"rld"  -3 转为了8  字符串长度 11-3=8;
+    console.log(stringValue.substring(-3)); //"hello world"   -3 转为0
+    console.log(stringValue.substr(-3)); //"rld" -3 转为了8  字符串长度 11-3=8;
+    console.log(stringValue.slice(3, -4)); //"lo w"
+    console.log(stringValue.substring(3, -4)); //"hel"
+    console.log(stringValue.substr(3, -4)); //"" （空字符串）将第二个参数转为0
+    console.log(stringValue.indexOf("o")); //4
+    console.log(stringValue.lastIndexOf("o")); //7
+    console.log(stringValue.indexOf("o", 6)); //7
+    console.log(stringValue.lastIndexOf("o", 6));//4
+    var stringValue = " hello world ";
+    var trimmedStringValue = stringValue.trim();// 去除前后空格
+    console.log(trimmedStringValue); //"hello world"
+    //还有一些方法..见书
+
+    //7.单体内置对象:
+    // Global:这个对象不存在,用来兜底的对象. 不属于任何其他对象的属性和方法,都是它的属性和方法.所有全局作用域中的属性和方法,都是它的属性和方法.
+    // 
+    var uri = "http://www.wrox.com/illegal value.htm#start";
+    //"http://www.wrox.com/illegal%20value.htm#start"
+    console.log(encodeURI(uri));
+    //"http%3A%2F%2Fwww.wrox.com%2Fillegal%20value.htm%23start"  这样就不对了。所以只能用来对uri之后的进行编码
+    console.log(encodeURIComponent(uri));
+    // encodeURI() 主要用于整个 URI（例如，http://www.wrox.com/illegal value.htm），而 encode-
+    // URIComponent() 主要用于对 URI 中的某一段（例如前面 URI 中的 illegal value.htm ）进行编码
+    // 一 般 来 说 ， 我 们 使 用 encodeURIComponent() 方 法 的 时 候 要 比 使 用
+    // encodeURI() 更多，因为在实践中更常见的是对查询字符串参数而不是对基础 URI
+    // 进行编码。
+
+
+    //eval方法：整个 ECMAScript语言中最强大的一个方法： eval() 。
+    eval("console.log('hi')");
+    eval("function sayHi() { console.log('hi'); }");
+    sayHi();
+    eval("var msg = 'hello world'; ");
+    console.log(msg);
+    //严格模式下eval 不能这么用.
+
+    // ECMAScript 虽然没有指出如何直接访问 Global 对象，但 Web 浏览器都是将这个全局对象作为
+    //     window 对象的一部分加以实现的。因此，在全局作用域中声明的所有变量和函数，就都成为了 window
+    // 对象的属性
+    // 另一种取得 Global 对象的方法是使用以下代码：
+    var global = function () {
+        return this;
+    }();
+
+    //Math 对象;
+    var num = Math.floor(Math.random() * 10 + 1);
 
 </script>
+
 </html>
