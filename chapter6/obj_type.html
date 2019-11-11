@@ -112,6 +112,7 @@
             }
         }
     });
+    console.log("_year:"+book._year);
     // 以上代码在 book 对象上定义了两个数据属性（ _year 和 edition ）和一个访问器属性（ year ）。
 
     // 使用 ECMAScript 5 的 Object.getOwnPropertyDescriptor() 方法，可以取得给定属性的描述
@@ -119,9 +120,76 @@
     var descriptor = Object.getOwnPropertyDescriptor(book, "_year");
     console.log(descriptor.value); //2004
     console.log(descriptor.configurable); //false
+    console.log(typeof descriptor.get);//undefined
+    descriptor = Object.getOwnPropertyDescriptor(book, "year");
+    console.log(descriptor.value); //undefied
+    console.log(descriptor.enumerable); //false
+    console.log(typeof descriptor.get);//funtion
 
+    //2 创建对象：
+        // 工厂：
+     function createPerson(name,age,job){
+         var o = new Object();
+         o.name = name;
+         o.age = age;
+         o.job = job;
+         o.sayName = function(){
+             console.log(name);
+         };
+         return o;
+     }
+
+     var perosn1 = createPerson("tom",23,"engineer");
+       //构造函数
+     function Person(name,age,job){
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.sayName = function(){
+             console.log(name);
+         };
+     }
+
+     var perons2 =  new Person("jack",21,"teacher");
+     //构造函数：1.没有显示的创建对象,2.直接赋值给this 3.没有return
+     //用new Person会经历4个步骤
+     /**
+        1.创建一个新对象。
+        2.将构造函数的作用域赋值给新对象。因此this指向新对象
+        3.执行构造函数代码
+        4.返回新对象。
+     */
+     console.log(perons2 instanceof Person);
+
+     //任何函数，用new 调用。就是构造函数。
+     Person("test,",213,"test");
+     window.sayName();
+
+     var o1 = new Object();
+     Person.call(o1,"kkk",23,"333");
+     o1.sayName();
+     //创建的方法也是对象。。虽然他们的逻辑一样；
+    //  用以下方法可以避免重复创建
+    function Customer(name){
+        this.name = name;
+        this.sayName = ConsoleName;
+    }
+    function ConsoleName(){
+        console.log(this.name);
+    }
+
+    var cus1 = new Customer("to");
+    var cus2 = new Customer("go");
+    cus1.sayName();
+    cus2.sayName();
+    console.log(cus1.sayName == cus2.sayName);
+
+    //用上列也不是个好方法。
+    // 原型模式：
+    function PersonNew(){
+    }
+    // PersonNew.prototype.name = 
     
-
 </script>
 
 </html>
