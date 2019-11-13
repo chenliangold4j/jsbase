@@ -196,13 +196,21 @@
 
     var personNew1 = new PersonNew();
     var personNew2 = new PersonNew();
+    console.log(PersonNew);
+    console.log(personNew1);
 
 //      理解原型对象：
     /**
-        无论什么时候，创建一个新函数，就会为该函数创建一个prototype属性。该属性指向函数的原型对象。
+        无论什么时候，创建一个新函数，就会为该函数创建一个prototype属性。该属性指向函数的原型对象。也可以称呼prototype为原型对象。
         所有原型对象自动获取一个constructor属性。该属性包含指向prototype属性所在函数的指针。
         
+        当调用构造函数创建一个新实例之后，该实例的内部将包含一个指针（内部属性），指向构造函数的原型对象。chrome中则是每个对象上的__proto__属性；
+        这个连接存在于实例和构造函数的原型对象之间，而不是存在于实例和构造函数之间，换句话说，这个指针指向构造函数的prototype.
+
     */
+    console.log( PersonNew.prototype.isPrototypeOf(personNew1));
+    console.log( Object.getPrototypeOf(personNew1) == PersonNew.prototype);
+    console.log( Object.getPrototypeOf(personNew1).name);
 </script>
 
 </html>
