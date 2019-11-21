@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="a">
+    <span id="b"></span>
+
+    <div id="app"> <input type="text" v-model="text">
+        {{ text }}</div>
+
+</body>
+<script src="./vue.js"></script>
+<script>
+    var obj = {};
+    Object.defineProperty(obj, 'hello', {
+        set: function (newVal) {
+            document.getElementById('a').value = newVal;
+            document.getElementById('b').innerHTML = newVal;
+        }
+    })
+    document.addEventListener('keyup', function (e) {
+        obj.hello = e.target.value;
+    });
+    // 这个效果就是在文本框中输入的值会显示在旁边的<span>标签里。这个例子就是双向绑定的实现，但是仅仅为了说明原理，这个和我们平时用的vue.js还有差距，下面是我们常见的vue.js写法
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            text: 'hello world'
+        }
+    })
+
+    //  我们常见的vue.js写法,       vue.js背后做了很多工作，我们一一分解。
+    // 1. 输入框以及文本节点与data中的数据绑定显示
+    // 2. 输入框变化的时候，data中的数据同步变化。即MVVM中 view => viewmodel的变化
+    // 3. data中的数据变化时，文本节点显示的内容同步变化。即MVVM中viewmode => view的变化
+
+</script>
+
+</html>

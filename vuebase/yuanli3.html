@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="text">
+        {{text}}
+    </div>
+</body>
+<script>
+    // var dom = nodeToFragment(document.getElementById("app"));
+    // console.log(dom);
+    // function nodeToFragment(node, vm) {
+    //     var flag = document.createDocumentFragment();
+    //     var child;
+    //     while (child = node.firstChild) {
+    //         flag.appendChild(child); // 劫持node的所有节点
+    //     }
+    //     return flag;
+    // }
+    // document.getElementById("app").appendChild(dom);
+
+
+//     先看compile方法，这个方法主要负责给node节点赋值
+// 1. compile方法接收两个参数，第一个是DOM节点，第二个vm是当前对象
+// 2. 判断dom节点类型，如果是1，表示元素（这里判断不太严谨，只是为了说明原理），在node节点的所有属性中查找nodeName为“v-model”的属性，
+// 找到属性值，这里是“text”。用当前对象中名字为“text”的属性值给节点赋值，最后删除这个属性，就是删除节点的v-model属性。
+// 3. 判断dom节点类型，如果是3，表示是节点内容，用正则表达式判断是“{{text}}”这样的字符串，用当前对象中名字为“text”的属性值给节点赋值，直接覆盖掉“{{text}}”
+// 4.这里是简单的例子，实际情况是dom结构要比这个复杂的多，可能会递归的寻找节点，判断节点类型，操作赋值。
+    function compile(node, vm) {
+        var reg = /\{\{(.*)\}\}/;
+        // 节点类型为元素,使用node.nodeType属性
+        if (node.nodeType === 1) {
+            var attr = node.attributes;
+            // 解析属性
+            for (var i = 0; i < attr.length; i++) {
+                if (attr[i].nodeName === 'v-model') {
+                    var name = attr[i].nodeValue; // 获取v-model绑定的属性名
+                    node.value = vm.data[name]; // 将data的值赋给该node
+                    node.removeAttribute('v-model');
+                }
+            }
+        }
+        // 节点类型为text,使用node.nodeType属性
+        if (node.nodeType === 3) {
+            if (reg.test(node.nodeValue)) {
+                var name = RegExp.$1; // 获取匹配到的字符串
+                name = name.trim()
+                node.nodeValue = vm.data[name]; // 将该data的值付给该node
+            }
+        }
+    }
+
+    // nodeToFragment方法负责创建文档片段，并将compile处理过的子节点劫持到这个文档片段中
+    // 1. 创建一个文档片段
+    // 2. 循环查找传入的node节点，调用compile方法给节点赋值
+    // 3. 将赋值后的节点劫持到文档片段中
+
+    function nodeToFragment(node, vm) {
+        var flag = document.createDocumentFragment();
+        var child;
+        while (child = node.firstChild) {
+            compile(child, vm);
+            // 将子节点劫持到文档片段中
+            flag.appendChild(child);
+        }
+        return flag;
+    }
+
+//     Vue构造函数
+// 1. 用传入参数的data属性给当前对象的data属性赋值
+// 2. 用传入参数的id标记查找挂载节点，调用nodeToFragment方法获取劫持后的文档片段，这个过程称为编译
+// 3. 编译完成后，将文档片段插入到指定的当前节点中
+
+// 实例化vue
+// 1. 实例化一个vue对象，el属性为挂载节点的id，data属性为要绑定的属性及属性值
+
+    // 构造函数
+    function Vue(options) {
+        this.data = options.data;
+        var id = options.el;
+        var dom = nodeToFragment(document.getElementById(id), this);
+        // 编译完成后把dom返回到app中
+        document.getElementById(id).appendChild(dom);
+    }
+
+    var vm = new Vue({
+        el: 'app',
+        data: {
+            text: 'hello world'
+        }
+    }); 
+</script>
+
+</html>
