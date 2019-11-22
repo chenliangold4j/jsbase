@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="test"/>
+</body>
+<script>
+
+    function Dep() {
+        // 订阅者集合
+        this.subs = [];
+    }
+    /**
+     * 发布者，添加订阅者和通知变化
+     * @type {{addSub: Dep.addSub, notify: Dep.notify}}
+     */
+    Dep.prototype = {
+        // 添加订阅者
+        addSub: function (sub) {
+            this.subs.push(sub);
+        },
+        // 轮询订阅者，通知变化，触发更新
+        notify: function () {
+            this.subs.forEach(function (sub) {
+                sub.update();
+            });
+        }
+    };
+
+    function Watcher(vm, node, name, nodeType) {
+        // 将当前对象赋值给全局变量Dep.target
+        Dep.target = this;
+        this.name = name;
+        this.node = node;
+        this.vm = vm;
+        this.nodeType = nodeType;
+        // 更新
+        this.update();
+        // 设置为空，避免重复添加订阅者
+        Dep.target = null;
+    }
+    Watcher.prototype = {
+        // 更新
+        update: function () {
+            /**调用get,这里Dep.target不为空，getter中会将当前属性添加到订阅者集合中，update函数执行完之后就不行了*/
+            this.get();
+            if (this.nodeType === 'text') {
+                this.node.nodeValue = this.value;
+            }
+            if (this.nodeType === 'input') {
+                this.node.value = this.value;
+            }
+        },
+        get: function () {
+            // this.vm[this.name] 触发getter
+            this.value = this.vm[this.name];
+        }
+    }
+
+    function defineReactive(obj, key, val) {
+        // 发布者对象
+        var dep = new Dep();
+        Object.defineProperty(obj, key, {
+            get: function () {
+                // 依赖收集，如果主题对象类的静态属性target有值， 此时Watcher方法被调用，给主题对象添加订阅者
+                //第一次获取的时候添加订阅？
+                if (Dep.target) dep.addSub(Dep.target);
+                return val;
+            },
+            set: function (newVal) {
+                if (newVal === val) return
+                val = newVal;
+                // 属性被修改时通知变更，主题对象作为发布者收到通知推送给订阅者，订阅者收到消息回调
+                dep.notify();
+            }
+        })
+    }
+
+    function observe(obj, vm) {
+        Object.keys(obj).forEach(function (key) {
+            defineReactive(vm, key, obj[key])
+        })
+    }
+
+    var book = {
+        data:{
+            name:"1234",
+        }
+    }
+    var doc = document.getElementById("test");
+    observe(book.data,book);
+    //重要的是这里发生了什么   new的时候update --》 get --->addSub添加了监听。
+    new Watcher(book,doc,"name","input");
+    book["name"] = "dsfasfas";
+
+
+</script>
+
+</html>
