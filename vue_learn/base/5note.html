@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <table border="1">
+            <tr>
+                <th></th>
+                <th>书名</th>
+                <th>出版日期</th>
+                <th>价格</th>
+                <th>数量</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="(item,index) in books">
+                <td>{{index}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.date}}</td>
+                <!-- <td>${{FinalPrice(item)}}</td> -->
+                <!-- 这个是过滤器的写法 -->
+                <td>${{item.price * item.count | showPrice}}</td>
+                <td><button @click="minusCurrent(item)">-</button>{{item.count}}<button @click="addCurrent(item)">+</button></td>
+                <td><button @click="removeCurrent(index)">移除</button></td>
+            </tr>
+        </table>
+        <h2>总价：{{totalPrice}}</h2>
+    </div>
+
+</body>
+<!-- 练习 -->
+<script src="../../ignore/vue.js"></script>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+
+            books: [
+                { name: "算法", date: "2006-9", price: 85, count: 0 },
+                { name: "操作系统", date: "2009-9", price: 55, count: 0 },
+                { name: "编程珠玑", date: "2016-9", price: 19, count: 0 },
+                { name: "重构", date: "2003-9", price: 105, count: 0 }
+            ]
+        }
+        ,
+        computed:{
+            totalPrice:function(){
+                var total = 0;
+                for(var i = 0;i<this.books.length;i++){
+                    total += this.books[i].price *  this.books[i].count ;
+                }
+                return total;
+            },
+        
+        },
+        methods:{
+            FinalPrice:function(item){
+                // if(item.count == 0)return "0.00";
+                var p = item.price * item.count;
+                return p.toFixed(2);
+            },
+            addCurrent(item){
+                item.count++;
+            },
+            minusCurrent(item){
+                if(item.count === 0)return;
+                item.count--;
+            },
+            removeCurrent(index){
+                console.log(index);
+                this.books.splice(index,1);
+            }
+        },
+        filters:{
+            showPrice(price){
+                return price.toFixed(2);
+            }
+
+        }
+    })
+</script>
+
+</html>

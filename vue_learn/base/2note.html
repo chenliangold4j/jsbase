@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>button</button>
+    <button>button</button>
+    <button>button</button>
+    <button>button</button>
+    <button>button</button>
+</body>
+<script src="../ignore/vue.js">
+</script>
+<script>
+    // 尽量写let 和 const  少写var
+
+    //1.let有作用域
+    {
+        var name = 'test';
+        console.log(name);
+    }
+    console.log(name);
+
+    {
+        let name2 = "test2";
+        console.log(name2);
+    }
+    // console.log(name2);// name2 is not defined
+
+    //再es5中，因为if和for没有块级作用域的概念，所以再很多时候，我们都必须借助于function的作用域解决应用外面变量的问题。
+    //es6中，加入let，let它是由if和for的块作用域。
+
+    //1.es5没用闭包，错误
+    // var btns = document.getElementsByTagName('button');
+    // for(var i=0;i<btns.length;i++){
+    //         btns[i].addEventListener('click',function(){
+    //             console.log("第"+i+"个按钮被点击了");//总是5
+    //         })
+    // }
+
+        //1.es5 用闭包，正确
+    // var btns = document.getElementsByTagName('button');
+    // for(var i=0;i<btns.length;i++){
+    //     (function(num){
+    //         btns[i].addEventListener('click',function(){
+    //             console.log("第"+num+"个按钮被点击了");//
+    //         })
+    //     })(i);
+    // }
+
+    //1.es6 没用闭包，正确
+    const btns = document.getElementsByTagName('button');
+    for (let i = 0; i < btns.length; i++) {
+        btns[i].addEventListener('click', function () {
+            console.log("第" + i + "个按钮被点击了");//是0-5
+        })
+    }
+
+
+    const a = 20;
+    // a=500//error
+    // const b; //error 必须初始化。
+    const obj={
+        name:'who',
+        age:20
+    };
+    obj.name = "why";//x
+    console.log(obj.name);
+
+    //es6的增强写法
+    //属性增强写法。方法增强写法。
+
+
+    let age = 20;
+    let height = 1.88;
+
+    //es5
+    const obj2 = {
+        name:name,
+        age:age,
+        height:height,
+        run:function(){
+            console.log("run");
+        }
+    }
+    console.log(obj2);
+    //es6
+    const obj3 = {
+        name,age,height,
+        run(){
+            console.log("run");
+        }
+    }
+    console.log(obj3);
+    obj3.run();
+
+
+</script>
+
+</html>

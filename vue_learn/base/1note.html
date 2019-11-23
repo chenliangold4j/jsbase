@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        /* vue解析 app之后，会删除v-cloak 所以没有被vue解析的时候，就不会显示。 */
+
+        .active {
+            color: red;
+        }
+
+        .line {
+            text-decoration: underline;
+        }
+
+        .default_style {
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- v-cloak  -->
+    <div id="app" v-cloak>
+        <li v-for="item in movies">{{item}}</li>
+        <li v-once>v-once 之后这个值的更改不会改变，只初始化，不监听变化 {{first}}</li>
+        <li>这里修改会变{{message}}</li>
+        <li>{{url}}</li>
+        <!-- 直接用dom -->
+        <h2 v-html="url"></h2>
+
+        <!-- 原封不动显示 -->
+        <li v-pre>{{message}}</li>
+
+        <!-- v-bind -->
+        <a v-bind:href="bindUrl">百度一下</a>
+        <a :href="bindUrl">百度一下</a>
+        <h2 class="default_style" :class='{active:isActive,line:isLine}'>ni hao</h2>
+
+        <button v-on:click="changeActive">changeActive</button>
+
+        <ul>
+            <li v-for="(item,index) in books" :class="{active:(index == redTime)}" v-on:click="changeRedTime(index)">
+                {{index}} -- {{item}}</li>
+            <!-- You may have an infinite update loop in a component render function.
+                ，在 v-for 循环当中，如果用方法或者计算属性对 vm.$data 的属性进行操作，
+                理论上，可能因为修改到循环对象，诱发无限循环。此时 Vue 就会发出警告（并不是真的已经无限循环了） -->
+        </ul>
+
+        <div>
+            <h2 :style="{fontSize:syteTest+'px',color:'red' }">test</h2>
+            <h2 :style="getStyles()">test</h2>
+            <h2 :style="[baseStyle,baseStyle1]">test</h2>
+        </div>
+
+        <!-- 计算属性。 -->
+        <h2>{{getFullName()}}</h2>
+        <h2>{{FullName}}</h2>
+        <h2>{{fullName2}}</h2>
+    </div>
+</body>
+
+<script src="../ignore/vue.js"></script>
+<script>
+    // setTimeout(function () {
+        let app = new Vue({
+            el: '#app',
+            data: {
+                message: "test",
+                movies: ["movie 1", "movie 2"],
+                first: "test",
+                url: '<a href="http://www.baidu.com">baidu</a>',
+                bindUrl: "http://www.baidu.com",
+                isActive: true,
+                isLine: true,
+                books: ["book1", "book2", "book3"],
+                redTime: null,
+                syteTest: 50,
+                baseStyle: { color: 'blue' },
+                baseStyle1: { fontSize: '20px' },
+                firstName: "tom",
+                lastName: "cat"
+            },
+
+            computed: {
+                //计算属性变化只计算一次。计算属性会有缓存
+                FullName: function(){
+                    return this.firstName + ' ' + this.lastName;
+                },
+                fullName2:{
+                    set:function(newValue){
+                        //没有set的时候就是只读。
+                        console.log("--?"+newValue);
+                        const names = newValue.split(' ');
+                        this.firstName=names[0];
+                        this.lastName=names[1];
+                    },
+                    get:function(){
+                        return this.firstName + ' ' + this.lastName;
+                    }
+                }
+            },
+            methods: {
+                changeActive: function () {
+                    this.isActive = !this.isActive;
+                },
+
+                changeRedTime(index) {
+                    this.redTime = index;
+                    console.log(this.redTime);
+                },
+                getStyles() {
+                    return { color: "green" };
+                },
+                getFullName() {
+                    return this.firstName + ' ' + this.lastName;
+                }
+            }
+        })
+        // }, 0);
+
+
+</script>
+
+</html>

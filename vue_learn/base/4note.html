@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <span v-if="isUser">
+            <span>用户账号</span>
+            <!-- 加key之后就不复用了。 -->
+            <input type="text" id="username" placeholder="用户账号" key="username">
+        </span>
+        <span v-else>
+            <span>用户邮箱</span>
+            <input type="text" id="email" placeholder="用户邮箱" key="email">
+        </span>
+        <button @click="change">切换</button>
+
+        <!-- v-show -->
+        <div>
+            <!-- 这里的话没有就直接不存在 -->
+            <h2 v-if="isShow" id="aaa">
+                {{message}}
+            </h2>
+
+            <!-- display: none;这里本质是隐藏 -->
+            <!-- 切换频率比较高的时候，用v-show性能好 -->
+            <h2 v-show="isShow" id="bbb">
+                {{message}}
+            </h2>
+        </div>
+
+        <div>
+            <!-- v-for的 value和key 获取的格式 -->
+            <li v-for="(value,key,index) in info">{{key}}--->{{value}}---{{index}}</li>
+        </div>
+
+        <div>
+            <!-- 官方推荐再使用v-for的时候  给组件或者元素加添一个：key属性。
+                这个和Vue的虚拟dom的diff算法有关。 -->
+        </div>
+        <!-- 对于数组的方法，大部分可以触发视图更新，但是也可能不会，这里注意一下 -->
+    </div>
+
+</body>
+<script src="../../ignore/vue.js"></script>
+<script>
+    // 这里input输入框里的内容切换的时候不会变化。
+    //因为vue再dom渲染的时候，出于性能考虑，会尽可能复用已经存在的元素，而不是重新创建元素。
+    //vue会发现input不再使用，就作为下一个else的input进行复用。
+    //解决这个问题，可以再input上面添加key
+    let app = new Vue({
+        el: '#app',
+        data: {
+            isUser: true,
+            isShow: false,
+            message: "testshow"
+            , info: {
+                name: 'test',
+                age: 14,
+                height: 1.6
+            },
+            testArray:["1","2","3","4","5"]
+        },
+        methods: {
+            change() {
+                console.log("change");
+                this.isUser = !this.isUser;
+            }
+        }
+
+
+    })
+
+
+</script>
+
+</html>

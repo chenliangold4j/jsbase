@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>{{count}}</h2>
+        <button v-on:click="increment">++</button>
+        <button @click="decrement">--</button>
+
+        <button @click="btnEventClick">event</button>
+        <!-- 如何手动获取到浏览器参数的event对象 -->
+        <button @click="btnEventClick2('abc',$event)">event2</button>
+
+        <!-- v-on修饰符 -->
+        <!-- 1.阻止事件冒泡 -->
+        <div @click="btnClick">
+            <!-- .stop -->
+            <button @click.stop="btnClick2">按钮</button>
+            <button @click="btnClick2">按钮</button>
+        </div>
+        <!-- 2.阻止默认事件 -->
+        <form action="baidu">
+            <input type="text">
+            <!-- .prevent  -->
+            <input @click.prevent="submitClick" type="submit">
+        </form>
+        <!-- .{keyCode|keyAlias} 特定事件响应   .enter响应回车  -->
+        <div>
+            <input type="text" @keyup.enter="keyUpConsole">
+        </div>
+        <!--  .once  只点一次有反应-->
+        <button @click.once='onceTest'>test</button>
+
+
+        <!-- v-if -->
+        <div>
+            <h2 v-if="count==1">第一</h2>   
+            <h2 v-else-if="count==2">第二</h2>
+            <h2 v-else>其他</h2>
+        </div>
+    </div>
+</body>
+<script src="../../ignore/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            count: 0
+        },
+        methods: {
+            increment() {
+                this.count++;
+            },
+            decrement() {
+                this.count--;
+            },
+            btnEventClick(event) {
+                console.log(event);
+            },
+            btnEventClick2(value, event) {
+                console.log(value);
+                console.log(event);
+            },
+
+            btnClick() {
+                console.log("wai");
+            },
+            btnClick2() {
+                console.log("nei");
+            },
+            submitClick() {
+                console.log("submit");
+            },
+            keyUpConsole() {
+                console.log("submitClick");
+            },
+            onceTest() {
+                console.log("onceTest");
+            }
+        }
+
+    })
+</script>
+
+</html>
