@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn :number1="num1" :number2="num2" @number1change="changenum1" @number2change="changenum2"></cpn>
+    </div>
+
+    <template id="cpn_template">
+        <div>
+           <h2>{{number1}}</h2>
+           <h2>{{dnum1}}</h2>
+           <!-- 等同于v-model -->
+           <input type="text" :value="dnum1" @input="num1Input" >
+           <h2>{{number2}}</h2>
+           <h2>{{dnum2}}</h2>
+           <input type="text" :value="dnum2" @input="num2Input" >
+        </div>
+    </template>
+</body>
+<script src="../../ignore/vue.js"></script>
+<script>
+    let cpn = {
+        template: "#cpn_template",
+        props:{
+            number1:Number,
+            number2:Number
+        },
+        methods:{
+            num1Input(event){
+                this.dnum1 = event.target.value * 1;//处理类型
+                this.$emit('number1change',this.dnum1);
+            },
+            num2Input(event){
+                this.dnum2 = event.target.value * 1;//处理类型
+                this.$emit('number2change',this.dnum1);
+            }
+        },
+        data(){
+            return {
+                dnum1:this.number1,
+                dnum2:this.number2
+            }
+        }
+    };
+    let app = new Vue({
+        el: '#app',
+        data: {
+            num1:1,
+            num2:0
+        },
+        methods:{
+            changenum1(value){
+                console.log("change1")
+                this.num1 = value;
+            },
+            changenum2(value){
+                console.log("change2")
+                this.num2 = value;
+            }
+        },
+        components: {
+            cpn: cpn
+        }
+    });
+</script>
+
+</html>

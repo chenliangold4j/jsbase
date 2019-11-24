@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 这里指定绑定哪个父组件的字段,注意cuser的写法 -->
+        <cpn v-bind:cmovies="movies" :cmessage="message" :c-user="user"></cpn> 
+    </div>
+    <template id="cpn_template">
+        <div>
+            <h2>{{cmessage}}</h2>
+            <h2 v-for="item in cmovies">{{item}}</h2>
+            <h2>{{cUser.name}}</h2>
+        </div>
+    </template>
+</body>
+<script src="../../ignore/vue.js"></script>
+<script>
+    // 父子组件传递消息。利用props 和 emit
+    let cpn = {
+        template: "#cpn_template",
+        data() {
+            return {}
+        },
+        // props: ['cmovies', 'cmessage']//相当于声明  这是一种写法
+        props:{//声明的同时,指定类型.默认值,是否必须
+            cmovies:Array,
+            cmessage:{
+                type:String,
+                default:"help",
+                required:true
+            },
+            cUser:null
+        }
+    }
+    let app = new Vue({
+        el: '#app',
+        data: {
+            message: "message_1",
+            movies: ["haiwang", "killer"],
+            user:{
+                name:"ww",
+                age:18,
+                height:1.88
+            }
+        },
+        components: {
+            cpn: cpn
+        }
+    });
+</script>
+
+</html>

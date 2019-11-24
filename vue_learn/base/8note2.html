@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 作用域,isShow是Vue实例里面的,不是子组件的. -->
+        <!-- 父模板的变量在父作用域编译渲染,子组件的变量在子组件的作用域编译渲染 -->
+        <cpn v-show="isShow"></cpn>
+    </div>
+
+    <template id="cpn_template">
+        <div>
+            <h2>{{name}}</h2>
+        </div>
+    </template>
+
+    <!-- 作用域插槽,父组件替换插槽的标签,但是内容由子组件来提供  -->
+    <div id="app2">
+        <!-- 作用域,isShow是Vue实例里面的,不是子组件的. -->
+        <!-- 父模板的变量在父作用域编译渲染,子组件的变量在子组件的作用域编译渲染 -->
+        <cpn2></cpn2>
+        <cpn2>
+            <!--使用作用于插槽 2. 使用方法 vue2.5 以后可以不用template -->
+            <template slot-scope="slot">
+                <span v-for="item in slot.data">{{item}} - </span>
+            </template>
+        </cpn2>
+    </div>
+
+    <template id="cpn_template2">
+        <div>
+            <!-- 使用作用于插槽 1. 申明格式如下 在slot中 -->
+            <slot :data="PLanguages">
+                <ul>
+                    <li v-for="item in PLanguages">{{item}}</li>
+                </ul>
+            </slot>
+        </div>
+    </template>
+
+</body>
+<script src="../../ignore/vue.js"></script>
+<script>
+    let cpn = {
+        template: "#cpn_template",
+        props: {
+
+        },
+        methods: {
+
+        },
+        data() {
+            return {
+                name: "子组件name",
+                isShow: false
+            }
+        },
+    };
+    let app = new Vue({
+        el: '#app',
+        data: {
+            isShow: true
+        },
+        methods: {
+
+        },
+        components: {
+            cpn: cpn,
+        }
+    });
+
+    let cpn2 = {
+        template: "#cpn_template2",
+        props: {
+
+        },
+        methods: {
+
+        },
+        data() {
+            return {
+                name: "子组件name2",
+                PLanguages: ['javascript', 'go', 'java', 'c', 'c++', 'php']
+            }
+        },
+    };
+    let app2 = new Vue({
+        el: '#app2',
+        data: {
+
+        },
+        methods: {
+
+        },
+        components: {
+            cpn2: cpn2,
+        }
+    });
+</script>
+
+</html>

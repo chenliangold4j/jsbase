@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 演示插槽 slot-->
+    <div id="app">
+        <!-- 插槽的内容 -->
+        <cpn><button>按钮</button></cpn>
+        <cpn><input type="text"></cpn>
+        <cpn></cpn>
+        <!-- 不指定的话,只能替换没有name属性的 -->
+        <soltt><span>标题</span><span slot="center">提升到法律上</span></soltt>
+    </div>
+
+    <template id="cpn_template">
+        <div>
+            <h2>子组件</h2>
+            <!-- 插槽可以由默认值 -->
+            <slot><span>默认</span></slot>
+        </div>
+    </template>
+
+    
+    <template id="slot_test">
+            <div>
+                <slot name="left"><span>左边</span></slot>
+                <slot name="center"><span>中间</span></slot>
+                <slot name="right"><span>右边</span></slot>
+                <slot></slot>
+            </div>
+        </template>
+</body>
+<script src="../../ignore/vue.js"></script>
+<script>
+    let cpn = {
+        template: "#cpn_template",
+        props: {
+
+        },
+        methods: {
+
+        },
+        data() {
+            return {
+                name: "子组件name"
+            }
+        },
+    };
+    let slot_test = {
+        template: "#slot_test",
+        props: {
+
+        },
+        methods: {
+
+        },
+        data() {
+            return {
+                name: "子组件name"
+            }
+        },
+    };
+    let app = new Vue({
+        el: '#app',
+        data: {
+
+        },
+        methods: {
+          
+        },
+        components: {
+            cpn: cpn,
+            soltt:slot_test
+        }
+    });
+</script>
+
+</html>

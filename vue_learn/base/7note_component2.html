@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-cpn></my-cpn>
+        <cpn1></cpn1>
+    </div>
+    <!-- 这里可以当作模板引用 -->
+    <script type="text/x-template" id="myCpn">
+    <div>
+        <h2>{{title}}</h2>
+        <p>sdfdsfsd</p>
+    </div>
+</script>
+    <!-- 这里可以当作模板引用 -->
+    <template id="myCpn2">
+        <div>
+            <h2>局部</h2>
+            <p>sdfdsfsd</p>
+        </div>
+    </template>
+</body>
+<script src="../../ignore/vue.js"></script>
+<script>
+    //组件
+    // 1.创建组件构造器
+    //2.注册组件
+    Vue.component('my-cpn', {
+        template: '#myCpn',
+        data(){ //局部组件data需要是函数。目的是为了隔离组件的data对象。使得每次初始化，组件的data是不同的对象。
+            return {
+                title:"全局title"
+            }
+        }
+    })//全局组件.意味着可以再多个vue示例中使用 
+
+
+    //3.使用
+    let app = new Vue({
+        el: '#app',
+        data: {
+        },
+        components: {
+            cpn1: {
+                template: '#myCpn2',
+            }
+        }
+    });
+</script>
+
+</html>

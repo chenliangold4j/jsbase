@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 夫组件模板 -->
+    <div id="app">
+        <!-- 监听子组件的 itemClick 事件，由子组件emit而来。 注意驼峰转换，这里默认会把item传过去。-->
+        <cpn v-on:item-click="cpnClick"></cpn>
+    </div>
+
+    <!-- 子组件模板 -->
+    <template id="cpn_template">
+        <div>
+            <button v-for="(item,index) in categroy" @click="btnClick(item)">{{item.name}}</button>
+        </div>
+    </template>
+</body>
+<script src="../../ignore/vue.js"></script>
+<script>
+    // 父子组件传递消息。利用props 和 emit
+    let cpn = {
+        template: "#cpn_template",
+        data() {
+            return {
+                categroy: [
+                    { id: 1, name: "热门推荐" },
+                    { id: 2, name: "数码" },
+                    { id: 3, name: "家电" },
+                    { id: 4, name: "情趣" }
+                ]
+            }
+        },
+        methods: {
+            btnClick(item) {
+                console.log(item);
+                //这里驼峰注意
+                this.$emit('item-click', item);
+            }
+        },
+        // props: ['cmovies', 'cmessage']//相当于声明  这是一种写法
+        props: {//声明的同时,指定类型.默认值,是否必须
+            
+        }
+    };
+    let app = new Vue({
+        el: '#app',
+        data: {
+           
+        },
+        methods:{
+            cpnClick(item){
+                console.log("cpnClick"+item.name);
+            }
+        },
+        components: {
+            cpn: cpn
+        }
+    });
+</script>
+
+</html>

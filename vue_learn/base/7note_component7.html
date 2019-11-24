@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 演示了 父组件直接拿子组件的对象 以及子组件拿到父对象 -->
+    <div id="app">
+        <cpn></cpn>
+        <cpn></cpn>
+        <cpn ref='aaa'></cpn>
+        <button @click="testclick">button</button>
+    </div>
+
+    <template id="cpn_template">
+        <div>
+            子组件
+            <soncpn></soncpn>
+            <button @click="testclickson">son - button</button>
+        </div>
+    </template>
+
+    <template id="son_cpn_template">
+        <div>
+            孙子组件son_
+            <button @click="endshow">end - btn</button>
+        </div>
+    </template>
+</body>
+<script src="../../ignore/vue.js"></script>
+<script>
+    let cpn = {
+        template: "#cpn_template",
+        props: {
+
+        },
+        methods: {
+            showMessage() {
+                console.log("showmessage")
+            },
+            testclickson() {
+                console.log(this.$parent);//拿到父组件的对象
+            }
+        },
+        data() {
+            return {
+                name: "子组件name"
+            }
+        },
+        components: {
+            soncpn: {
+                template: '#son_cpn_template',
+                methods: {
+                    endshow() {
+                        console.log(this.$parent);//拿到父组件的对象 
+                        console.log(this.$root);//拿到根组件
+                    }
+                }
+            }
+        }
+    };
+    let app = new Vue({
+        el: '#app',
+        data: {
+        },
+        methods: {
+            testclick() {
+                // 1.$children 拿子组件
+                console.log(this.$children);//这个对象包含了所有子组件
+                this.$children[0].showMessage();
+                console.log(this.$children[0].name);
+
+                //2.$refs拿组件  这个用的多99%
+                console.log(this.$refs.aaa.name);
+                this.$refs.aaa.showMessage();
+            }
+        },
+        components: {
+            cpn: cpn
+        }
+    });
+</script>
+
+</html>
