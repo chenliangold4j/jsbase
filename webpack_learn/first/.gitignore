@@ -18,3 +18,5 @@
 .cache
 .eslintcache
 package-lock.json
+*.jpg
+*.png

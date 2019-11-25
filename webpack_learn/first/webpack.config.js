@@ -5,7 +5,8 @@ module.exports = {
     output: {
         //__dirname nodejs全局变量
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath:'dist/'
     },
 
     module: {
@@ -17,7 +18,43 @@ module.exports = {
                     'style-loader',
                     'css-loader'
                 ]
-            }
+            },
+
+            {
+                test: /\.less$/,
+                use: [{
+                    loader: "style-loader" // creates style nodes from JS strings
+                }, {
+                    loader: "css-loader" // translates CSS into CommonJS
+                }, {
+                    loader: "less-loader" // compiles Less to CSS
+                }]
+            },
+
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192
+                            ,
+                            name: '[path][name][hash:8].[ext]'
+                        }
+                    }
+                ]
+            },
+            // {
+            //     test: /\.(png|jpg|gif)$/,
+            //     use: [
+            //         {
+            //             loader: 'file-loader',
+            //             options: {
+            //                 name: '[path][name][hash:8].[ext]'
+            //               }
+            //         }
+            //     ]
+            // }
         ]
     }
 }
