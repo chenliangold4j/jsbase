@@ -1,5 +1,6 @@
 *vue.js
 
+/dist/
 /node_modules
 /test/js
 /test/browsertest/js
