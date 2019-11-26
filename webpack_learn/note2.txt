@@ -1,0 +1,25 @@
+
+ second:
+    1.安装vue  npm install vue --save 
+
+      引用vue
+
+      import Vue from 'vue';
+
+      const app = new Vue({
+          el:'#app',
+          data:{
+              message:"test"
+          }
+      })
+
+      注意  由两种形态
+        1.runtime-only  代码中，不可以由任何的template，既模板不起作用，像是vue 的{{}} 这种语法不起作用
+        2.runtime-compiler 代理中可以由template，因为由compiler可以用于编译模板。
+      添加下列配置以使用
+        resolve: {
+        alias: {
+              'vue$': 'vue/dist/vue.esm.js'
+          }
+          //相当于指定这个目录的js去处理 这样就是runtime-compiler
+      }
