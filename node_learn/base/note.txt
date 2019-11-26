@@ -1,0 +1,5 @@
+
+1.运行：
+C:\Workspace>node hello.js
+Hello, world.
+
