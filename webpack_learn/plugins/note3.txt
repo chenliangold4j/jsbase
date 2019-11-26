@@ -1,0 +1,77 @@
+插件
+    1.版权声明:
+    const webpack = require("webpack");
+      new webpack.BannerPlugin("code by chenliang") 添加plugin即可
+
+    2.html插件, HtmlWebpackPlugin  
+        自动生成index.html文件
+        打包的js文件,自动通过script插入到html中.
+
+        安装
+        npm install --save-dev html-webpack-plugin
+
+        基本用法
+        该插件将为你生成一个 HTML5 文件， 其中包括使用 script 标签的 body 中的所有 webpack 包。 只需添加插件到你的 webpack 配置如下：
+
+        var HtmlWebpackPlugin = require('html-webpack-plugin');
+        var path = require('path');
+
+        var webpackConfig = {
+        entry: 'index.js',
+        output: {
+            path: path.resolve(__dirname, './dist'),
+            filename: 'index_bundle.js'
+        },
+        plugins: [new HtmlWebpackPlugin()]
+        };
+
+
+    3.文件压缩插件 这里webpack4似乎自带了.
+
+    4.dev-server
+        npm install webpack-dev-server --save-dev
+
+        dev-server 有如下属性: 
+            contentBase 为哪一个文件夹提供本地服务.默认是根文件夹,这里是dist
+            port
+            inline:实时刷新
+            historyApiFallback:在SPA页面中,依赖HTML5的history模式.
+
+        devServer: {
+            contentBase: path.join(__dirname, "dist"),
+            compress: true,
+            port: 9000
+         }
+
+        package.json 还可以配置启动: "dev" : "webpack-dev-server  --open"  --open是为了自动打开浏览器
+
+        这里会自动构建.
+
+    5.webpack在非开发模式下打包后生成的js文件是混淆并且压缩了的，我们可能很难看懂，并且在浏览器的sources中也不能打断点调试，可以用webpack中的sourcemap配置调试。
+        在webpack的配置文件中配置source maps，需要配置devtool，它有以下四种不同的配置选项，各具优缺点，描述如下：
+
+        devtool选项	配置结果
+        1)source-map	在一个单独的文件中产生一个完整且功能完全的文件。这个文件具有最好的source map，但是它会减慢打包速度；
+
+        2)cheap-module-source-map	在一个单独的文件中生成一个不带列映射的map，不带列映射提高了打包速度
+        ，但是也使得浏览器开发者工具只能对应到具体的行，不能对应到具体的列（符号），会对调试造成不便；
+
+        3)eval-source-map	使用eval打包源文件模块，在同一个文件中生成干净的完整的source map。
+        这个选项可以在不影响构建速度的前提下生成完整的sourcemap，但是对打包后输出的JS文件的执行具有性能和安全的隐患。在开发阶段这是一个非常好的选项，在生产阶段则一定不要启用这个选项；
+
+        4)cheap-module-eval-source-map	这是在打包文件时最快的生成source map的方法，生成的Source Map 会和打包后的JavaScript文件同行显示，
+        没有列映射，和eval-source-map选项具有相似的缺点；
+
+        module.exports = {
+            entry: __dirname + "/app/main.js",//唯一入口文件
+            // mode: 'development',
+            devtool: 'source-map',
+            output: {
+                path: __dirname + "/public",//打包后的文件存放的地方
+                filename: "bundle.js"//打包后输出文件的文件名
+            }
+        }
+
+
+      6.环境隔离
+            npm install webpack-merge //这里我就先不用了 似乎webpack4 有些不一样.所以之后学新的把

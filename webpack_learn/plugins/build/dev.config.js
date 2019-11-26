@@ -1,14 +1,15 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const webpack = require("webpack");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// https://vue-loader.vuejs.org/zh/ 这里由vueloader的配置
 module.exports = {
     entry: './src/main.js',
     output: {
         //__dirname nodejs全局变量
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, '../dist'),
         filename: 'bundle.js',
-        publicPath: 'dist/'
+        // publicPath: 'dist/' 使用了html的插件之后可以注释掉
     },
 
     module: {
@@ -46,17 +47,6 @@ module.exports = {
                     }
                 ]
             },
-            // {
-            //     test: /\.(png|jpg|gif)$/,
-            //     use: [
-            //         {
-            //             loader: 'file-loader',
-            //             options: {
-            //                 name: '[path][name][hash:8].[ext]'
-            //               }
-            //         }
-            //     ]
-            // }
             {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
@@ -73,6 +63,7 @@ module.exports = {
             }
         ]
     },
+
     resolve: {
         // 这里让import省略vue后缀
         extensions: ['.js', '.css', '.vue'],
@@ -82,6 +73,16 @@ module.exports = {
     },
     plugins: [
         // 请确保引入这个插件！
-        new VueLoaderPlugin()
-    ]
+        new VueLoaderPlugin(),
+        new webpack.BannerPlugin("code by chenliang"),
+        new HtmlWebpackPlugin({
+            template: "index.html"
+        })
+    ],
+    devtool: 'source-map',
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 9000
+    }
 }
