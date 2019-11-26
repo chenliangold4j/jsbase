@@ -1,4 +1,5 @@
 const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     entry: './src/main.js',
@@ -64,12 +65,22 @@ module.exports = {
                         presets: ['@babel/preset-env']
                     }
                 }
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
         ]
     },
     resolve: {
+        // 这里让import省略vue后缀
+        extensions:['.js','.css','.vue'],
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
         }
-    }
+    },
+    plugins: [
+        // 请确保引入这个插件！
+        new VueLoaderPlugin()
+    ]
 }
