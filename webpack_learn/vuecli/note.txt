@@ -1,0 +1,28 @@
+1. vue cli
+    Getting Started
+    Install:
+
+    npm install -g @vue/cli
+    # OR
+    yarn global add @vue/cli
+    Create a project:
+
+    vue create my-project
+    # OR
+    vue ui
+
+2. runtime-compiler
+   template -> ast -> render -> vdom -> ui
+
+   runtime-only(1.性能更高，2.代码量少)
+   render-> vdom -> ui
+
+   用默认搭建出来的是runtime-only，所以vue用render
+   这时候.vue中的由vue-template-compiler解析
+   在main。js使用的时候 App是一个对象。模板已经被解析成render函数了
+
+3 配置已经被隐藏 。想要研究的话。看@vue下的cli-service 下的webpack.config.js
+    里面require了lib下的配置文件
+
+4.确实需要添加配置的话。 建立vue.config.js文件
+    之后会合并这个配置文件
