@@ -1,28 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h2>ha ha ha</h2>
+    <router-link to="/home" tag="button" replace>首页</router-link>
+    <router-link to="/about" tag="button" replace>关于</router-link>
+    <button @click="testClick">测试</button>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  name: "App",
+  data(){
+    return{
+
+    }
+  },
+  methods:{
+    testClick(){
+      console.log("test click");
+      //通过代码修改  这样没有router-link-active样式
+      this.$router.push('/Test');//push 可以换成replace
+    }
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  .router-link-active{
+    color:red;
+  }
 </style>

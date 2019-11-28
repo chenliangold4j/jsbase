@@ -26,3 +26,50 @@
 
 4.确实需要添加配置的话。 建立vue.config.js文件
     之后会合并这个配置文件
+
+5 路由：
+    vue-router 我这里用vue ui直接添加
+    改url而不刷新页面的两种方法：
+        1. location.hash='foo' //修改hash
+        修改hash后http://localhost:8080/#/aaa
+
+        2. html5里面可以
+        history.pushState({},'','home')
+        修改后：http://localhost:8080/home 
+        history.replaceState({},'','home')
+
+        这两种网页都没有刷新
+
+    vue-router
+
+ 6 详情见代码 router的基本使用
+    router-link vue-router的内置组件，它会渲染成一个a标签
+    router-view 改标签耕录路径渲染不同的组件
+    路由切换，切换的是router-view挂载的组件，其他内容不会发生改变。
+
+7路由的默认路径
+     {
+        path:'/',
+        redirect:"/home"
+    },
+    {
+        path:"/home",
+        component:Home
+    },
+
+
+ 8 不用hash 而用h5的history
+    //配置路由和组件之间的关系。
+        const router = new VueRouter({
+        routes,
+        mode:'history' // 配饰history
+        })
+
+ 9 router-link的多个属性
+    tag  见代码
+    replace  不让返回
+    active-class = 'active'  让被点击的link的活动class名字改变   //别改了。。太麻烦
+    默认：     .router-link-active{
+                color:red;
+            }
+ 10 
