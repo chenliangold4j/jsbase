@@ -72,4 +72,44 @@
     默认：     .router-link-active{
                 color:red;
             }
- 10 
+ 10 动态路由。
+    在rounter配置中
+    {
+        path:"/user/:userId",
+        component:User
+    }
+    router-link配置
+     <router-link v-bind:to="'/user/'+userId" tag="button" replace>用户</router-link>
+
+     user页获取userId
+      computed:{
+        userId(){
+            return this.$route.params.userId;
+        }
+     }
+     或者 <h2>{{$route.params.userId}}</h2>     
+
+11 路由的懒加载
+  在rounter配置中
+        {
+            path:"/user/:userId",
+            component:()=>import('../components/User')
+        }
+12 路由的嵌套
+    添加组件之后
+    {
+        path:"/home",
+        component:Home,
+        children:[
+        {
+            path:'news',
+            component:()=>import('../components/Home_news')
+        },
+        {
+            path:'message',
+            component:()=>import('../components/Home_message')
+        }
+        ]
+    }
+
+    
