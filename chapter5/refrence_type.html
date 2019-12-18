@@ -49,18 +49,19 @@
     //数组的栈方法： LIFO
     var count = color3.push("black");
     console.log(count);
-    console.log(color3.toString());
+    console.log('数组栈LIFO操作------>' + color3.toString());
     color3.pop();
-    console.log(color3.toString());
+    console.log('数组栈LIFO操作------>' + color3.toString());
     color3.pop();
-    console.log(color3.toString());
+    console.log('数组栈LIFO操作------>' + color3.toString());
 
     //数组的队列方法：FIFO
     color3.push("black", "blue");
-    console.log(color3.shift());
-    console.log(color3.toString());
+    console.log('队列fifo操作------>' + color3);
+    console.log('队列fifo操作------>' + color3.shift());
+    console.log('队列fifo操作------>' + color3.toString());
     color3.unshift("green");
-    console.log(color3.toString());
+    console.log('队列fifo操作------>' + color3.toString());
 
     //数组的重排序；
     var valuse = [1, 2, 3, 4, 5];
@@ -80,6 +81,12 @@
     var testcolor = color3.concat("yellow", ["brown", "pink"]);
     console.log(testcolor);
     console.log(testcolor.slice(1, 3));
+
+    // arrayObject.splice(index,howmany,item1,.....,itemX)
+    //      参数	描述
+    // index	必需。整数，规定添加/删除项目的位置，使用负数可从数组结尾处规定位置。
+    // howmany	必需。要删除的项目数量。如果设置为 0，则不会删除项目。
+    // item1, ..., itemX	可选。向数组添加的新项目。
 
     var removed = testcolor.splice(0, 1); //删除第一项
     console.log(testcolor);
