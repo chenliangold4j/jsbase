@@ -15,13 +15,13 @@
 
     <template id="cpn_template">
         <div>
-           <h2>{{number1}}</h2>
-           <h2>{{dnum1}}</h2>
-           <!-- 等同于v-model -->
-           <input type="text" :value="dnum1" @input="num1Input" >
-           <h2>{{number2}}</h2>
-           <h2>{{dnum2}}</h2>
-           <input type="text" :value="dnum2" @input="num2Input" >
+            <h2>{{number1}}</h2>
+            <h2>{{dnum1}}</h2>
+            <!-- 等同于v-model -->
+            <input type="text" :value="dnum1" @input="num1Input">
+            <h2>{{number2}}</h2>
+            <h2>{{dnum2}}</h2>
+            <input type="text" :value="dnum2" @input="num2Input">
         </div>
     </template>
 </body>
@@ -29,39 +29,39 @@
 <script>
     let cpn = {
         template: "#cpn_template",
-        props:{
-            number1:Number,
-            number2:Number
+        props: {
+            number1: Number,
+            number2: Number
         },
-        methods:{
-            num1Input(event){
+        methods: {
+            num1Input(event) {
                 this.dnum1 = event.target.value * 1;//处理类型
-                this.$emit('number1change',this.dnum1);
+                this.$emit('number1change', this.dnum1);
             },
-            num2Input(event){
+            num2Input(event) {
                 this.dnum2 = event.target.value * 1;//处理类型
-                this.$emit('number2change',this.dnum1);
+                this.$emit('number2change', this.dnum1);
             }
         },
-        data(){
+        data() {
             return {
-                dnum1:this.number1,
-                dnum2:this.number2
+                dnum1: this.number1,
+                dnum2: this.number2
             }
         }
     };
     let app = new Vue({
         el: '#app',
         data: {
-            num1:1,
-            num2:0
+            num1: 1,
+            num2: 0
         },
-        methods:{
-            changenum1(value){
+        methods: {
+            changenum1(value) {
                 console.log("change1")
                 this.num1 = value;
             },
-            changenum2(value){
+            changenum2(value) {
                 console.log("change2")
                 this.num2 = value;
             }
