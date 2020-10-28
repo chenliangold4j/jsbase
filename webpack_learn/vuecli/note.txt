@@ -39,9 +39,7 @@
         history.replaceState({},'','home')
 
         这两种网页都没有刷新
-
     vue-router
-
  6 详情见代码 router的基本使用
     router-link vue-router的内置组件，它会渲染成一个a标签
     router-view 改标签耕录路径渲染不同的组件
