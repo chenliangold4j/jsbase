@@ -51,12 +51,11 @@ export default {
       this.$http
         .post("http://localhost:8081/login", this.loginForm)
         .then((res) => {
-          console.log("数据是:", res);
-          console.log(res.data.data);
-          console.log(res.data.code);
           window.sessionStorage.setItem("token",res.data.data);
+          this.$router.push('/home');
         })
         .catch((e) => {
+          console.log(e);
           console.log("获取数据失败");
         });
     },

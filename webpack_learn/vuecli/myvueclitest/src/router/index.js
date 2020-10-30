@@ -10,6 +10,13 @@ Vue.use(ElementUI);
 
 import axios from 'axios'
 Vue.prototype.$http = axios;
+
+axios.interceptors.request.use(config => {
+  console.log(config);
+  config.headers.test = windows.sessionStorage.getItem("token");
+  return config;
+});
+
 // import Test from '../components/Test'
 // import User from '../components/User'
 
